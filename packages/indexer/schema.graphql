@@ -1,0 +1,5 @@
+type Newwalletminted @entity {
+  id: ID!
+  owner: Bytes!
+  wallet: Bytes!
+}

@@ -1,0 +1,17 @@
+name: omni-indexer # Name of the project
+description: OmniWallet # Description of the project
+networks: # Configuration of the blockchain networks that the project is deployed on
+  - id: 5777 # Chain identifier of the network
+    rpc_config:
+      url: http://localhost:8546 # RPC URL that will be used to subscribe to blockchain data on this network
+    start_block: 0 # Initial block from which the indexer will start listening for events
+    contracts: # Configuration for each contract
+      - name: OmniWallet # User-defined contract name
+        address:
+          - "0xcbFDA19fe2E3dE77a1A05c528b31fC8F7a7AA0f6" # An array of addresses that the contract is deployed to on the network
+          - "0xc9953b2D70F00220d656Fbae3e9Cfcbf0924E98d"
+        handler: src/EventHandlers.js # Location of the file that handles the events emitted by this contract
+        events: # Configuration for each event emitted by this contract that the indexer will listen for
+          - event: "NewWalletMinted(address indexed owner, address indexed wallet)" #  Name of the event (must match the name in the ABI)
+            requiredEntities: # An array of entities that need to loaded and made accessible within the handler function (an empty array indicates that no entities are required)
+              - name: "Newwalletminted" # The name of the required entity (must match an entity defined in `schema.graphql`)
